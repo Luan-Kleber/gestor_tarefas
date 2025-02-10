@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +15,12 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    
+    try {
+        DB::connection()->getPdo(); // irá se concetar com o banco
+        echo "Conexão Efetuada com Sucesso. " . DB::connection()->getDatabaseName();
+    } catch (\Exception $e) {
+        die("Não foi possível conectar ao banco de dados, Erro: {$e->getMessage()}");
+    }
+
 });
